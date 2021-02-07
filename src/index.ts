@@ -7,11 +7,13 @@ import fs from 'fs'
 import { v4 as generateUuid } from 'uuid'
 
 async function start() {
+  /*
   const actualDate = new Date()
   const date = `${actualDate.getDate()}/${
     actualDate.getMonth() + 1
   }/${actualDate.getFullYear()}`
-  log.info('Data de Hoje: ' + date)
+	log.info('Data de Hoje: ' + date)
+	*/
   loadFirebase()
   const postName = askPostName()
   const postId = parsePostNameToPostId(postName)
@@ -33,7 +35,7 @@ async function start() {
     postId,
     postName,
     postContent,
-    date,
+    //date,
     thumbnailUrl,
     postAssents,
     postAssentsUrls
@@ -55,7 +57,7 @@ async function loadFirebase() {
   })
 }
 function askPostName(): string {
-  const postName = readline.question('Qual o nome do post?')
+  const postName = readline.question('Qual o nome do post? ')
   if (!postName) log.error('O nome da postagem é obrigatório')
   return postName
 }
@@ -151,7 +153,7 @@ async function uploadPostToFirestore(
   postId: string,
   postName: string,
   postContent: string,
-  date: string,
+  //date: string,
   thumbnailUrl: string,
   postAssents: string[],
   postAssentsUrls: string[]
@@ -161,7 +163,7 @@ async function uploadPostToFirestore(
     .doc(`postsOfBlog/${postId}`)
     .set({
       name: postName,
-      date,
+      date: firebaseAdmin.firestore.FieldValue.serverTimestamp(),
       image: thumbnailUrl,
       content: postContent,
       assents: postAssents.map((assent, index) => {
