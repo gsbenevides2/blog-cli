@@ -1,4 +1,3 @@
-import readline from 'readline-sync'
 import * as log from './log'
 import * as firebaseAdmin from 'firebase-admin'
 import path from 'path'
@@ -11,7 +10,6 @@ dotenv.config()
 export default async function start(postName: string): Promise<void> {
   loadFirebase()
   const postId = parsePostNameToPostId(postName)
-  await verifyIfPostExists(postId)
   log.info('Aguarde carregando...')
   let postContent = getPostContent(postName)
   const thumbnailUrl = await uploadThumbnail(postName, postId)
@@ -52,21 +50,6 @@ async function loadFirebase() {
 }
 function parsePostNameToPostId(postName: string): string {
   return postName.toLowerCase().replace(' ', '-')
-}
-async function verifyIfPostExists(postId: string): Promise<void> {
-  const documentSnapshot = await firebaseAdmin
-    .firestore()
-    .doc(`postsOfBlog/${postId}`)
-    .get()
-  if (documentSnapshot.exists) {
-    if (
-      !readline.keyInYN(
-        'Uma postagem com esse nome já existe! Deseja sobrescreve-lá?'
-      )
-    ) {
-      log.success('Nada foi feito!')
-    }
-  }
 }
 function getPostContent(postName: string): string {
   const postContentPath = path.resolve(
