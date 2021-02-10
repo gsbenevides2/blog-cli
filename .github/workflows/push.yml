@@ -1,0 +1,29 @@
+name: Enviar Postagem
+on:
+ push:
+  branchs:
+   - master
+jobs:
+ send:
+  runs-on: ubuntu-latest
+   steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with:
+       node-version: '12.x'
+       registry-url: 'https://registry.npmjs.org'
+    - name: 'Cache NPM dependencies'
+      uses: actions/cache@v1
+      with:
+       path: ~/.npm
+       key: ${{ runner.OS }}-npm-cache-${{ hashFiles('**/package-lock.json') }}
+       restore-keys: |
+        ${{ runner.OS }}-npm-cache-
+    - name: 'Installing dependencies'
+      run: npm install
+    - name: 'Building the build'
+      run: npm run build
+    - name: 'Send Post'
+      run: node dist/github.js
+      env:
+       FIREBASE_ADMIN_CREDENTIALS: ${{secrets.FIREBASE_ADMIN_CREDENTIALS}}

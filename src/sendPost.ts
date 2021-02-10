@@ -1,30 +1,24 @@
-#!/usr/bin/env node
 import readline from 'readline-sync'
 import * as log from './log'
 import * as firebaseAdmin from 'firebase-admin'
 import path from 'path'
 import fs from 'fs'
 import { v4 as generateUuid } from 'uuid'
+import dotenv from 'dotenv'
 
-async function start() {
-  /*
-  const actualDate = new Date()
-  const date = `${actualDate.getDate()}/${
-    actualDate.getMonth() + 1
-  }/${actualDate.getFullYear()}`
-	log.info('Data de Hoje: ' + date)
-	*/
+dotenv.config()
+
+export default async function start(postName: string): Promise<void> {
   loadFirebase()
-  const postName = askPostName()
   const postId = parsePostNameToPostId(postName)
   await verifyIfPostExists(postId)
   log.info('Aguarde carregando...')
-  let postContent = getPostContent()
-  const thumbnailUrl = await uploadThumbnail(postId)
-  const postAssents = getPostAssents()
+  let postContent = getPostContent(postName)
+  const thumbnailUrl = await uploadThumbnail(postName, postId)
+  const postAssents = getPostAssents(postName)
   let postAssentsUrls: string[] = []
   if (postAssents.length) {
-    postAssentsUrls = await uploadPostAssents(postId, postAssents)
+    postAssentsUrls = await uploadPostAssents(postName, postId, postAssents)
     postContent = replaceAssentsUrlsInContent(
       postContent,
       postAssents,
@@ -35,7 +29,6 @@ async function start() {
     postId,
     postName,
     postContent,
-    //date,
     thumbnailUrl,
     postAssents,
     postAssentsUrls
@@ -43,23 +36,19 @@ async function start() {
   log.success('Post Enviado')
 }
 async function loadFirebase() {
-  const credentialsFilePath = path.resolve(process.cwd(), 'credentials.json')
-  if (!fs.existsSync(credentialsFilePath))
-    log.error(
-      'Ops não localizei o arquivo de credenciais em ' + credentialsFilePath
-    )
-  const credentialsFileContent = JSON.parse(
-    fs.readFileSync(credentialsFilePath).toString()
-  )
+  function readCredentials() {
+    if (!process.env.FIREBASE_ADMIN_CREDENTIALS) {
+      log.error('Not found credentials')
+      return ''
+    } else {
+      const data = Buffer.from(process.env.FIREBASE_ADMIN_CREDENTIALS, 'base64')
+      return JSON.parse(data.toString('utf8'))
+    }
+  }
   firebaseAdmin.initializeApp({
-    credential: firebaseAdmin.credential.cert(credentialsFileContent),
+    credential: firebaseAdmin.credential.cert(readCredentials()),
     storageBucket: 'gs://site-do-guilherme.appspot.com'
   })
-}
-function askPostName(): string {
-  const postName = readline.question('Qual o nome do post? ')
-  if (!postName) log.error('O nome da postagem é obrigatório')
-  return postName
 }
 function parsePostNameToPostId(postName: string): string {
   return postName.toLowerCase().replace(' ', '-')
@@ -79,8 +68,13 @@ async function verifyIfPostExists(postId: string): Promise<void> {
     }
   }
 }
-function getPostContent(): string {
-  const postContentPath = path.resolve(process.cwd(), 'content.md')
+function getPostContent(postName: string): string {
+  const postContentPath = path.resolve(
+    process.cwd(),
+    'posts',
+    postName,
+    'content.md'
+  )
   if (!fs.existsSync(postContentPath)) {
     log.error(
       'Não encontrei o arquivo com conteudo do post em: ' + postContentPath
@@ -88,8 +82,16 @@ function getPostContent(): string {
   }
   return fs.readFileSync(postContentPath).toString()
 }
-async function uploadThumbnail(postId: string): Promise<string> {
-  const thumbnailPath = path.resolve(process.cwd(), 'thumbnail.png')
+async function uploadThumbnail(
+  postName: string,
+  postId: string
+): Promise<string> {
+  const thumbnailPath = path.resolve(
+    process.cwd(),
+    'posts',
+    postName,
+    'thumbnail.png'
+  )
   if (!fs.existsSync(thumbnailPath)) {
     log.error('Não foi possivel encontrar a thumb em: ' + thumbnailPath)
   }
@@ -107,20 +109,32 @@ async function uploadThumbnail(postId: string): Promise<string> {
     'postsOfBlog/' + postId + '/thumbnail.png'
   )}?alt=media&token=${uuid}`
 }
-function getPostAssents(): string[] {
-  const postAssentsFolderPath = path.resolve(process.cwd(), 'assents/')
+function getPostAssents(postName: string): string[] {
+  const postAssentsFolderPath = path.resolve(
+    process.cwd(),
+    'posts',
+    postName,
+    'assents/'
+  )
   if (!fs.existsSync(postAssentsFolderPath)) {
     return []
   }
   return fs.readdirSync(postAssentsFolderPath)
 }
 function uploadPostAssents(
+  postName: string,
   postId: string,
   assents: string[]
 ): Promise<string[]> {
   const bucket = firebaseAdmin.storage().bucket()
   const promises = assents.map(async assent => {
-    const assentPath = path.resolve(process.cwd(), 'assents', assent)
+    const assentPath = path.resolve(
+      process.cwd(),
+      'posts',
+      postName,
+      'assents',
+      assent
+    )
     const assentFile = bucket.file(`postsOfBlog/${postId}/assents/${assent}`)
     await assentFile.save(fs.readFileSync(assentPath))
     const uuid = generateUuid()
@@ -153,7 +167,6 @@ async function uploadPostToFirestore(
   postId: string,
   postName: string,
   postContent: string,
-  //date: string,
   thumbnailUrl: string,
   postAssents: string[],
   postAssentsUrls: string[]
@@ -174,4 +187,3 @@ async function uploadPostToFirestore(
       })
     })
 }
-start()
