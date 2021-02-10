@@ -8,7 +8,7 @@ export function success(message: string): void {
   console.log(
     `${colors.green.bold('✓')}${colors.green(` Sucesso! ${message}`)}`
   )
-  process.exit(1)
+  process.exit(0)
 }
 export function info(message: string): void {
   console.log(`${colors.bold('i')} Info: ${message}`)
