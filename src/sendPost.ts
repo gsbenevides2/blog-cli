@@ -49,7 +49,7 @@ async function loadFirebase() {
   })
 }
 function parsePostNameToPostId(postName: string): string {
-  return postName.toLowerCase().replace(' ', '-')
+  return postName.toLowerCase().split(' ').join('-')
 }
 function getPostContent(postName: string): string {
   const postContentPath = path.resolve(
