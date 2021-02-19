@@ -1,22 +1,29 @@
 import axios from 'axios'
-import * as log from './log'
+import 'dotenv/config'
+import * as log from './utils/log'
 import { ListCommits } from './githubInterfaces'
-import sendPost from './sendPost'
+import sendPost from './actions/sendPost'
+import deletePost from './actions/deletePost'
 
 const api = axios.create({
   baseURL: 'https://api.github.com'
 })
 
-function start() {
+async function start(): Promise<void> {
   log.info('Obtendo ultimo commit')
-  getCommit().then(commitMessage => {
-    if (verifyCommitMessage(commitMessage)) {
-      const postsNames = getPostsNames(commitMessage)
-      postsNames.forEach(sendPost)
-    } else {
-      log.success('Finalizado pois o ultimo commit não é novo post!')
-    }
-  })
+  const commitMessage = await getCommit()
+  const commitType = getCommitType(commitMessage)
+  if (commitType === 'new post' || commitType === 'updatePost') {
+    const postsNames = getPostsNames(commitMessage)
+    const promises = postsNames.map(sendPost)
+    await Promise.all(promises)
+  } else if (commitType === 'delete post') {
+    const postsNames = getPostsNames(commitMessage)
+    const promises = postsNames.map(deletePost)
+    await Promise.all(promises)
+  } else {
+    log.success('Finalizado pois o ultimo commit não é novo post!')
+  }
 }
 
 function getPostsNames(commitMessage: string) {
@@ -28,8 +35,8 @@ function getPostsNames(commitMessage: string) {
     })
 }
 
-function verifyCommitMessage(commitMessage: string) {
-  return commitMessage.split('\n')[0].includes('post: new posts')
+function getCommitType(commitMessage: string) {
+  return commitMessage.split('\n')[0].split(':')[0]
 }
 
 async function getCommit() {

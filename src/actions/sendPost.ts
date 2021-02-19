@@ -1,16 +1,16 @@
-import * as log from './log'
-import * as firebaseAdmin from 'firebase-admin'
+import * as log from '../utils/log'
+import loadFirebase from '../utils/firebase'
 import path from 'path'
 import fs from 'fs'
 import { v4 as generateUuid } from 'uuid'
-import dotenv from 'dotenv'
+import getFirestorePostReference from '../utils/getFirestorePostReference'
+import parsePostNameToPostId from '../utils/parsePostNameToPostId'
 
-dotenv.config()
+const firebase = loadFirebase()
 
 export default async function start(postName: string): Promise<void> {
-  loadFirebase()
   const postId = parsePostNameToPostId(postName)
-  log.info('Aguarde carregando...')
+  log.info(`Enviando: ${postId}`)
   let postContent = getPostContent(postName)
   const thumbnailUrl = await uploadThumbnail(postName, postId)
   const postAssents = getPostAssents(postName)
@@ -31,25 +31,12 @@ export default async function start(postName: string): Promise<void> {
     postAssents,
     postAssentsUrls
   )
-  log.success('Post Enviado')
-}
-async function loadFirebase() {
-  function readCredentials() {
-    if (!process.env.FIREBASE_ADMIN_CREDENTIALS) {
-      log.error('Not found credentials')
-      return ''
-    } else {
-      const data = Buffer.from(process.env.FIREBASE_ADMIN_CREDENTIALS, 'base64')
-      return JSON.parse(data.toString('utf8'))
-    }
-  }
-  firebaseAdmin.initializeApp({
-    credential: firebaseAdmin.credential.cert(readCredentials()),
-    storageBucket: 'gs://site-do-guilherme.appspot.com'
+  await sendNotifications({
+    name: postName,
+    id: postId,
+    thumbnailUrl
   })
-}
-function parsePostNameToPostId(postName: string): string {
-  return postName.toLowerCase().split(' ').join('-')
+  log.success('Post Enviado')
 }
 function getPostContent(postName: string): string {
   const postContentPath = path.resolve(
@@ -78,7 +65,7 @@ async function uploadThumbnail(
   if (!fs.existsSync(thumbnailPath)) {
     log.error('Não foi possivel encontrar a thumb em: ' + thumbnailPath)
   }
-  const bucket = firebaseAdmin.storage().bucket()
+  const bucket = firebase.storage().bucket()
   const thumbnailFile = bucket.file(`postsOfBlog/${postId}/thumbnail.png`)
   await thumbnailFile.save(fs.readFileSync(thumbnailPath))
   const uuid = generateUuid()
@@ -109,7 +96,7 @@ function uploadPostAssents(
   postId: string,
   assents: string[]
 ): Promise<string[]> {
-  const bucket = firebaseAdmin.storage().bucket()
+  const bucket = firebase.storage().bucket()
   const promises = assents.map(async assent => {
     const assentPath = path.resolve(
       process.cwd(),
@@ -154,19 +141,48 @@ async function uploadPostToFirestore(
   postAssents: string[],
   postAssentsUrls: string[]
 ): Promise<void> {
-  await firebaseAdmin
-    .firestore()
-    .doc(`postsOfBlog/${postId}`)
-    .set({
-      name: postName,
-      date: firebaseAdmin.firestore.FieldValue.serverTimestamp(),
-      image: thumbnailUrl,
-      content: postContent,
-      assents: postAssents.map((assent, index) => {
-        return {
-          name: assent,
-          url: postAssentsUrls[index]
-        }
-      })
+  const documentReference = getFirestorePostReference(postId)
+  await documentReference.set({
+    name: postName,
+    date: firebase.firestore.FieldValue.serverTimestamp(),
+    image: thumbnailUrl,
+    content: postContent,
+    assents: postAssents.map((assent, index) => {
+      return {
+        name: assent,
+        url: postAssentsUrls[index]
+      }
     })
+  })
+}
+interface SendNotificationsPostData {
+  name: string
+  id: string
+  thumbnailUrl: string
+}
+async function sendNotifications(
+  postData: SendNotificationsPostData
+): Promise<void> {
+  async function getFcmTokens(): Promise<string[]> {
+    const documentSnapshot = await firebase.firestore().doc('others/fcm').get()
+    const blogTokens: string[] = documentSnapshot.data()?.blogTokens as string[]
+    return blogTokens
+  }
+  const fcmTokens = await getFcmTokens()
+  await firebase.messaging().sendMulticast({
+    tokens: fcmTokens,
+    notification: {
+      title: 'Postagem Publicada',
+      body: postData.name,
+      imageUrl: postData.thumbnailUrl
+    },
+    webpush: {
+      fcmOptions: {
+        link: `/blog/post/${postData.id}`
+      },
+      headers: {
+        image: postData.thumbnailUrl
+      }
+    }
+  })
 }

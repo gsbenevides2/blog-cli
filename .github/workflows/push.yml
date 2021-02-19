@@ -21,9 +21,7 @@ jobs:
        ${{ runner.OS }}-npm-cache-
    - name: 'Installing dependencies'
      run: npm install
-   - name: 'Building the build'
-     run: npm run build
    - name: 'Send Post'
-     run: node dist/github.js
+     run: npm start
      env:
       FIREBASE_ADMIN_CREDENTIALS: ${{secrets.FIREBASE_ADMIN_CREDENTIALS}}
