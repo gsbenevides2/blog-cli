@@ -16,14 +16,19 @@ async function start(): Promise<void> {
   if (commitType === 'new post' || commitType === 'updatePost') {
     const postsNames = getPostsNames(commitMessage)
     const promises = postsNames.map(sendPost)
-    await Promise.all(promises)
+    await Promise.all(promises).then(()=>{
+      log.success('Finalizado, posts enviados.')
+    })
   } else if (commitType === 'delete post') {
     const postsNames = getPostsNames(commitMessage)
     const promises = postsNames.map(deletePost)
-    await Promise.all(promises)
+    await Promise.all(promises).then(()=>{
+      log.success('Finalizado, posts deletados.')
+    })
   } else {
     log.success('Finalizado pois o ultimo commit não é novo post!')
   }
+  process.exit(0)
 }
 
 function getPostsNames(commitMessage: string) {

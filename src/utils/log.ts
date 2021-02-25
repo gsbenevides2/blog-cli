@@ -10,4 +10,5 @@ export function success(message: string): void {
 }
 export function info(message: string): void {
   console.log(`${colors.bold('i')} Info: ${message}`)
+  
 }
