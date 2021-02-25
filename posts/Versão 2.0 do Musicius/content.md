@@ -2,17 +2,17 @@ Fala meu consagrado, como vai? Vim anunciar a versão 2.0 do meu player de músi
 
 ## Mais opções de controle de Reprodução
 Agora você tem opções para controlar como a lista de músicas será reproduzida:
-![Antiga tela de player vs nova tela de Player](/assets/player.png)
+![Antiga tela de player vs nova tela de Player](/assents/player.png)
 - **Reprodução Aleatório:** A próxima música é escolhida aleatoriamente a partir das músicas não tocadas ainda.
 - **Repetir:** Ao atingir o final da lista de reprodução a volta a primeira música, caso o aleatório esteja ativado ele escolhe a primeira de forma aleatória a a partir das músicas que já tocaram. E caso seja a primeira ele volta para a última música.
 - **Lista de Reprodução:** Consulte tópico a seguir.
 
 ## Nova tela: Lista de Reprodução
-![Nova tela de reprodução](/assets/reproduction.gif)
+![Nova tela de reprodução](/assents/reproduction.gif)
 Aqui você confere a lista de músicas que serão tocadas, alterar a ordem delas e remover.
 
 ## E algumas outras coisas
-![Deletar Música](/assets/delete.png)
+![Deletar Música](/assents/delete.png)
 Ao sair do app, a música,sua posição atual e sua lista de reprodução, serão salvas e estarão disponíveis na próxima vez que o app abrir. E você poderá continuar de onde parou.
 Agora é possível apagar músicas.
 E algumas melhorias internas como a atualização do Expo SDK 39 para o 40.
