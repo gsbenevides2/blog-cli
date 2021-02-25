@@ -18,7 +18,7 @@ Agora é possível apagar músicas.
 E algumas melhorias internas como a atualização do Expo SDK 39 para o 40.
 
 ## Como atualizar
-Infelizmente como teve uma atualização do SDK do Expo a versão anterior terá que ser excluída e baixar o apk ou apks da nova versão. Além disso, todas as músicas terão que ser recolocadas no app.
+Infelizmente como teve uma atualização do SDK do Expo, não tem o Over-The-Air e terá que baixar o apk ou apks da nova versão. Mas não se preocupe as músicas continuaram intactas após a atualização.
 
 ## E o que vem por aí.
 Na primeira versão foi pensado em criar o principal, que é tocar músicas a partir de links do YouTube. E foi um sucesso, então nessa nova versão tentei priorizar coisas que envolvem a reprodução de listas de músicas pois na próxima versão a prioridade será Playlists. Já foi desenvolvido também, o layout de algumas telas, entre elas a de artista e álbum. E provavelmente elas estarão disponíveis na próxima versão. Se você estiver interessado em baixar o app ou acompanhar o projeto acesse o github [aqui](https://github.com/gsbenevides2/musicius).  E é só por isso por hoje, obrigado por ter lido. Até mais
