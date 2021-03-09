@@ -1,11 +1,13 @@
 Seja bem vindo meu caro leitor. Hoje estou lançando a versão 3.0 do meu player de músicas, o Musicius. Irei lhe mostrar algumas das novidades a seguir.
 
 ## Playlists
-![Playlists Demo](/assents/playlists.webm)
+![Playlists Demo](/assents/playlists.gif)
+
 Agora é possível criar playlists, assim você pode selecionar somente aquelas músicas boas para lavar louça, ou então as que tem uma vibe perfeita para festas. Você pode escolher a ordem das músicas do mesmo jeito que tem na tela "Reproduzindo Agora" com o arrastar e soltar.
 
 ## Aba de Artistas
 ![Artists Demo](/assents/artists.webp)
+
 Nessa aba você pode tocar suas músicas pelos seus artistas favoritos. Então agora você pode ficar somente na vibe Indie Rock com Imagine Dragons, ou eletrônica com o eterno Avicii. Além disso, caso um artista tenha deixado você puto, você poderá excluir todas as músicas dele com um clique.
 
 ## Performance
@@ -13,6 +15,7 @@ Uma coisa é certa, meu app tem vários problemas de performance, alguns muito s
 
 ## E Outras Coisas
 ![New Options Demo](/assents/new_options.webp)
+
 Agora você consegue:
 - Exportar e importar o banco de dados de músicas.
 - Apagar todas as informações do app.
