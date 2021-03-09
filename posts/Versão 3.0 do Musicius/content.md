@@ -14,11 +14,11 @@ Uma coisa é certa, meu app tem vários problemas de performance, alguns muito s
 ## E Outras Coisas
 ![New Options Demo](/assents/new_options.webp)
 Agora você consegue:
-Exportar e importar o banco de dados de músicas.
-Apagar todas as informações do app.
-Alteramos o botão três pontos/opções nas listas de músicas.
-E algumas coisas que eu com certeza esqueci.
-E algumas melhorias por debaixo dos panos, como um pouco de refatoração de código, para facilitar as implantações futuras de features.
+- Exportar e importar o banco de dados de músicas.
+- Apagar todas as informações do app.
+- Alteramos o botão três pontos/opções nas listas de músicas.
+- E algumas coisas que eu com certeza esqueci.
+- E algumas melhorias por debaixo dos panos, como um pouco de refatoração de código, para facilitar as implantações futuras de features.
 
 ## Como Atualizar
 Como não houve uma atualização do SDK do Expo em si, essa atualização virá através do over-the-air. Então você só precisa abrir a aplicação e aguardar alguns minutos. Não há nenhum aviso de atualização então simplesmente:
