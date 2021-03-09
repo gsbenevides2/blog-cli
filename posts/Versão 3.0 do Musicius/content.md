@@ -25,7 +25,7 @@ Como não houve uma atualização do SDK do Expo em si, essa atualização virá
 Abra o app.
 Use ele por uns minutos.
 Feche e abra o app novamente
-Caso não apareça a nova guia de artistas, repita o procedimento anterior com um intervalo maior de tempo. Mesmo assim, se não atualizar entre em contato comigo pelas redes sociais aqui.
+Caso não apareça a nova guia de artistas, repita o procedimento anterior com um intervalo maior de tempo. Mesmo assim, se não atualizar entre em contato comigo pelas redes sociais [aqui](https://gsbenevides2.vercel.app/#page_3).
 
 ## O Que Vem Por Aí
 Primeiramente mais melhorias de performance, correção de bugs e refatoração de código. Em features estão:
@@ -36,4 +36,4 @@ Também será dado início aos estudos sobre leitura e gravação de arquivos em
 ## Finalizando
 Então é isso meus amores, tenham um ótimo dia, e obrigado por ler até aqui.
 
-Github do Projeto
+[Github do Projeto](https://github.com/gsbenevides2/musicius)
