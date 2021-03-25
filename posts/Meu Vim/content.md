@@ -33,7 +33,3 @@ Minha configuração está disponível nesse [repositório](https://github.com/g
 ## Finalizando
 
 Obrigado por te lido até aqui, beijos no seu coração e até mais.
-
-[thumbnail](Vim,%20uma%20prisa%CC%83o%20b8433fa2002c4613bd0d0044a32e0503/IMG_20210320_205338.png)
-
-[myvim](Vim,%20uma%20prisa%CC%83o%20b8433fa2002c4613bd0d0044a32e0503/Screenshot_20210320-214557%201.png)
