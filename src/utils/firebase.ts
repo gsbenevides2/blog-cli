@@ -2,6 +2,7 @@ import * as firebaseAdmin from 'firebase-admin'
 import * as log from './log'
 type FirebaseAdmin = typeof firebaseAdmin
 
+/** Inicia e configura o Firebase Admin SDK */
 export default function loadFirebase(): FirebaseAdmin {
   function readCredentials() {
     if (!process.env.FIREBASE_ADMIN_CREDENTIALS) {
@@ -13,9 +14,10 @@ export default function loadFirebase(): FirebaseAdmin {
     }
   }
   if (!firebaseAdmin.apps.length) {
+    const credentials = readCredentials()
     firebaseAdmin.initializeApp({
-      credential: firebaseAdmin.credential.cert(readCredentials()),
-      storageBucket: 'gs://site-do-guilherme.appspot.com'
+      credential: firebaseAdmin.credential.cert(credentials),
+      storageBucket: `gs://${credentials.project_id}.appspot.com`
     })
   }
   return firebaseAdmin

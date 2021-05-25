@@ -6,32 +6,46 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "start": "ts-node src/github.ts",
-    "test": "ts-node test/index.ts"
+    "send": "ts-node src/scripts/send/index.ts",
+    "delete": "ts-node src/scripts/delete/index.ts",
+    "update": "ts-node src/scripts/update/index.ts",
+    "preview": "ts-node src/scripts/preview/index.ts"
   },
   "devDependencies": {
     "@types/express": "^4.17.8",
+    "@types/follow-redirects": "^1.13.0",
     "@types/node": "^14.11.10",
+    "@types/readline-sync": "^1.4.3",
+    "@types/rimraf": "^3.0.0",
+    "@types/sharp": "^0.28.0",
+    "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.4.1",
     "@typescript-eslint/parser": "^4.4.1",
     "eslint": "^7.11.0",
     "eslint-config-prettier": "^6.13.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-import-helpers": "^1.1.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "prettier": "^2.1.2",
     "ts-node-dev": "^1.0.0",
-    "@types/uuid": "^8.3.0",
     "typescript": "^4.0.3"
   },
   "dependencies": {
-    "axios": "^0.21.1",
     "colors": "^1.4.0",
     "dotenv": "^8.2.0",
+    "express": "^4.17.1",
     "firebase-admin": "^9.4.2",
-    "uuid": "^8.3.2"
+    "follow-redirects": "^1.14.1",
+    "ngrok": "^4.0.1",
+    "notionapi-agent": "^1.2.1",
+    "readline-sync": "^1.4.10",
+    "rimraf": "^3.0.2",
+    "sharp": "^0.28.1",
+    "uuid": "^8.3.2",
+    "webp-converter": "^2.3.3"
   }
 }
