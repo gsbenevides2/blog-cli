@@ -5,6 +5,9 @@
   "author": "Guilherme da Silva Benevides <gsbenevides2@gmail.com>",
   "license": "MIT",
   "private": false,
+	"engines": {
+	 "node": "12"
+	},
   "scripts": {
 	 "build":"tsc",
 	 "start":"node dist/server/index.js",
