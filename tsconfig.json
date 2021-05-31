@@ -18,6 +18,7 @@
 	"forceConsistentCasingInFileNames": true
  },
  "exclude": [
+	"./dist/**",
 	"prettier.config.js"
  ]
 }
