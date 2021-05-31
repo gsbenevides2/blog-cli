@@ -1,6 +1,5 @@
 import { https } from 'follow-redirects'
 import fs from 'fs'
-import * as log from './log'
 
 export function downloadFile(url: string, output: string): Promise<void> {
   return new Promise<void>(resolve => {
@@ -14,7 +13,7 @@ export function downloadFile(url: string, output: string): Promise<void> {
     })
     request.on('error', () => {
       fs.unlinkSync(output)
-      log.error('Erro ao fazer download:' + url)
+      throw new Error('Erro ao fazer download:' + url)
     })
   })
 }

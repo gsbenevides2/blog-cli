@@ -6,16 +6,15 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "send": "ts-node src/scripts/send/index.ts",
-    "delete": "ts-node src/scripts/delete/index.ts",
-    "update": "ts-node src/scripts/update/index.ts",
-    "preview": "ts-node src/scripts/preview/index.ts"
+	 "build":"tsc",
+	 "start":"node dist/server/index.js",
+	 "dev":"ts-node src/server/index.ts"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.10",
     "@types/express": "^4.17.8",
     "@types/follow-redirects": "^1.13.0",
     "@types/node": "^14.11.10",
-    "@types/readline-sync": "^1.4.3",
     "@types/rimraf": "^3.0.0",
     "@types/sharp": "^0.28.0",
     "@types/uuid": "^8.3.0",
@@ -36,15 +35,16 @@
   },
   "dependencies": {
     "colors": "^1.4.0",
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "firebase-admin": "^9.4.2",
     "follow-redirects": "^1.14.1",
     "ngrok": "^4.0.1",
     "notionapi-agent": "^1.2.1",
-    "readline-sync": "^1.4.10",
     "rimraf": "^3.0.2",
     "sharp": "^0.28.1",
+    "socket.io": "^4.1.2",
     "uuid": "^8.3.2",
     "webp-converter": "^2.3.3"
   }
