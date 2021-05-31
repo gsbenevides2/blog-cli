@@ -5,13 +5,13 @@
   "author": "Guilherme da Silva Benevides <gsbenevides2@gmail.com>",
   "license": "MIT",
   "private": false,
-	"engines": {
-	 "node": "14"
-	},
+  "engines": {
+    "node": "14"
+  },
   "scripts": {
-	 "build":"tsc",
-	 "start":"node dist/server/index.js",
-	 "dev":"ts-node src/server/index.ts"
+    "build": "tsc",
+    "start": "node dist/server/index.js",
+    "dev": "ts-node src/server/index.ts"
   },
   "devDependencies": {
     "@types/cors": "^2.8.10",
@@ -43,7 +43,6 @@
     "express": "^4.17.1",
     "firebase-admin": "^9.4.2",
     "follow-redirects": "^1.14.1",
-    "ngrok": "^4.0.1",
     "notionapi-agent": "^1.2.1",
     "rimraf": "^3.0.2",
     "sharp": "^0.28.1",
