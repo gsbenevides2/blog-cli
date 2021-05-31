@@ -1,19 +1,23 @@
 {
  "compilerOptions": {
-	"target": "es2019",
-	"module": "CommonJS",
-	"rootDir": "./src",
+	"target": "es2019",                            
+	"module": "commonjs",
+	"lib": ["es2019","dom"],
+	"allowJs": true,
 	"outDir": "./dist",
+	"rootDir": "./src",
+	"removeComments": true,
 	"strict": true,
-	"moduleResolution": "node",
+	"typeRoots": [
+	 "./node_modules/@types",
+	 "./src/@types"
+	],
 	"esModuleInterop": true,
+	"resolveJsonModule":true,
 	"skipLibCheck": true,
 	"forceConsistentCasingInFileNames": true
  },
- "include": [
-	"src/**/*.ts"
- ],
  "exclude": [
-	"node_modules"
+	"prettier.config.js"
  ]
 }
