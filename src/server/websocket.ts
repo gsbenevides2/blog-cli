@@ -27,7 +27,7 @@ export function setupWebSocket(server: Server): void {
       if (data.password !== process.env.PASSWORD) {
         socket.emit('message', {
           type: 'error',
-          message: 'Senha Incorreta.'
+          text: 'Senha Incorreta.'
         })
       } else {
         sendPost(data.notionPageUrl, message => {
@@ -44,7 +44,7 @@ export function setupWebSocket(server: Server): void {
       if (data.password !== process.env.PASSWORD) {
         socket.emit('message', {
           type: 'error',
-          message: 'Senha Incorreta.'
+          text: 'Senha Incorreta.'
         })
       } else {
         updatePost(data.notionPageUrl, message => {
@@ -61,7 +61,7 @@ export function setupWebSocket(server: Server): void {
       if (data.password !== process.env.PASSWORD) {
         socket.emit('message', {
           type: 'error',
-          message: 'Senha Incorreta.'
+          text: 'Senha Incorreta.'
         })
       } else {
         deletePost(data.postName, message => {
