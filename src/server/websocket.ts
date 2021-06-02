@@ -16,7 +16,11 @@ type DeletePostData = {
 }
 
 export function setupWebSocket(server: Server): void {
-  const io = new SocketIoServer(server)
+  const io = new SocketIoServer(server, {
+    cors: {
+      origin: '*'
+    }
+  })
 
   io.on('connection', socket => {
     socket.on('sendPost', (data: SendPostData) => {
