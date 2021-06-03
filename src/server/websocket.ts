@@ -15,6 +15,15 @@ type DeletePostData = {
   password: string
 }
 
+export type Message = {
+  text: string
+  type: 'info' | 'success' | 'error' | 'data'
+  data?: unknown
+}
+
+export type Messager = (message: Message) => void
+export type ConfirmFunction = () => void
+
 export function setupWebSocket(server: Server): void {
   const io = new SocketIoServer(server, {
     cors: {
@@ -23,6 +32,22 @@ export function setupWebSocket(server: Server): void {
   })
 
   io.on('connection', socket => {
+    let continueFunction: ConfirmFunction | void
+    socket.on('finish', (password: string) => {
+      if (password !== process.env.PASSWORD) {
+        socket.emit('message', {
+          type: 'error',
+          text: 'Senha Incorreta.'
+        })
+      } else if (continueFunction) {
+        continueFunction()
+      } else {
+        socket.emit('message', {
+          type: 'error',
+          text: 'Invalid type.'
+        })
+      }
+    })
     socket.on('sendPost', (data: SendPostData) => {
       if (data.password !== process.env.PASSWORD) {
         socket.emit('message', {
@@ -33,9 +58,7 @@ export function setupWebSocket(server: Server): void {
         sendPost(data.notionPageUrl, message => {
           socket.emit('message', message)
         }).then(sendPostContinue => {
-          socket.on('finish', () => {
-            if (sendPostContinue) sendPostContinue()
-          })
+          continueFunction = sendPostContinue
         })
       }
     })
@@ -50,9 +73,7 @@ export function setupWebSocket(server: Server): void {
         updatePost(data.notionPageUrl, message => {
           socket.emit('message', message)
         }).then(updatePostContinue => {
-          socket.on('finish', () => {
-            if (updatePostContinue) updatePostContinue()
-          })
+          continueFunction = updatePostContinue
         })
       }
     })

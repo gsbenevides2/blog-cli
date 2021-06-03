@@ -6,12 +6,12 @@
   "license": "MIT",
   "private": false,
   "engines": {
-    "node": "14"
+    "node": "12"
   },
   "scripts": {
     "build": "tsc",
     "start": "node dist/server/index.js",
-    "dev": "ts-node src/server/index.ts"
+    "dev": "ts-node-dev --ignore-watch=node_modules --clear --respawn --transpile-only src/server/index.ts"
   },
   "devDependencies": {
     "@types/cors": "^2.8.10",

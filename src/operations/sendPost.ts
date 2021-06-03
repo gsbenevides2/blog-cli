@@ -1,4 +1,3 @@
-import 'dotenv/config'
 import { firestore } from 'firebase-admin'
 
 import { downloadAssents } from '../modules/assents/downloadAssents'
@@ -16,16 +15,9 @@ import { downloadThumbmail } from '../modules/thumbnail/downloadThumbnail'
 import { prepareThumbnailFolder } from '../modules/thumbnail/path'
 import { prepareThumbnails } from '../modules/thumbnail/prepareThumbnails'
 import { uploadThumbnais } from '../modules/thumbnail/uploadThumbnails'
+import { ConfirmFunction, Messager } from '../server/websocket'
 import parsePostNameToPostId from '../utils/parsePostNameToPostId'
 
-type Message = {
-  text: string
-  type: 'info' | 'success' | 'error' | 'data'
-  data?: unknown
-}
-
-type Messager = (message: Message) => void
-type ConfirmFunction = () => void
 export async function sendPost(
   pageUrl: string,
   messager: Messager

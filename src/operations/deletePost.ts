@@ -1,16 +1,8 @@
-import 'dotenv/config'
-
 import { deletePost as deletePostFirestore } from '../modules/firebase/firestore/post'
 import { deleteFiles } from '../modules/firebase/storage/deleteFiles'
+import { Messager } from '../server/websocket'
 import parsePostNameToPostId from '../utils/parsePostNameToPostId'
 
-type Message = {
-  text: string
-  type: 'info' | 'success' | 'error' | 'data'
-  data?: unknown
-}
-
-type Messager = (message: Message) => void
 export async function deletePost(
   pageName: string,
   messager: Messager

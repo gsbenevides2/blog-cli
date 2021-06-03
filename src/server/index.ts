@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import cors from 'cors'
 import express from 'express'
 import http from 'http'
@@ -10,7 +11,7 @@ app.use(cors())
 app.use(serverPreviewRouter)
 const server = http.createServer(app)
 
-const port = process.env.PORT || 3000
+const port = process.env.PORT
 setupWebSocket(server)
 server.listen(port, () => {
   console.log('Servidor rodando')
