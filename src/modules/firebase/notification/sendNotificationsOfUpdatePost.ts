@@ -17,6 +17,12 @@ export async function sendNotificationsOfUpdatePost(
       imageUrl: postImage
     },
     webpush: {
+      notification: {
+        title: 'Tivemos uma atualização nessa postagem:',
+        body: postName,
+        imageUrl: postImage,
+        icon: '/profile.png'
+      },
       fcmOptions: {
         link: `/blog/post/${postId}`
       },

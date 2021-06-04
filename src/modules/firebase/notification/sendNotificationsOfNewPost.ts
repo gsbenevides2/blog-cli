@@ -17,6 +17,12 @@ export async function sendNotificationsOfNewPost(
       imageUrl: postImage
     },
     webpush: {
+      notification: {
+        title: 'Venha ver 🏃. Tem um novo post em meu blog.',
+        body: postName,
+        imageUrl: postImage,
+        icon: '/profile.png'
+      },
       fcmOptions: {
         link: `/blog/post/${postId}`
       },
