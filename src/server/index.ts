@@ -8,7 +8,15 @@ import { serverPreviewRouter } from '../modules/preview/server'
 import { setupWebSocket } from './websocket'
 
 const app = express()
-app.use(cors())
+if (process.env.POST_CHANNEL === 'production') {
+  app.use(
+    cors({
+      origin: 'https://gui.dev.br'
+    })
+  )
+} else {
+  app.use(cors())
+}
 app.use(serverPreviewRouter)
 const server = http.createServer(app)
 

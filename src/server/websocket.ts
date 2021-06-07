@@ -27,7 +27,8 @@ export type ConfirmFunction = () => void
 export function setupWebSocket(server: Server): void {
   const io = new SocketIoServer(server, {
     cors: {
-      origin: '*'
+      origin:
+        process.env.POST_CHANNEL === 'production' ? 'https://gui.dev.br' : '*'
     }
   })
 
