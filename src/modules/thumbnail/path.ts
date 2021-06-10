@@ -1,6 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import rmrf from 'rimraf'
+import rmrf from 'rmrf'
 
 export const thumbnailFolderPath = path.resolve(process.cwd(), 'thumbnail')
 
@@ -21,14 +21,16 @@ export const listThumbnailPath = path.resolve(thumbnailFolderPath, 'list.webp')
 export function prepareThumbnailFolder(): Promise<void> {
   return new Promise<void>((resolve, reject) => {
     if (fs.existsSync(thumbnailFolderPath)) {
-      rmrf(thumbnailFolderPath, fs, error => {
-        if (error) {
+      rmrf(
+        thumbnailFolderPath /*, fs, error => {
+        if (error */
+      ) /* {
           reject(error)
-        } else {
-          fs.mkdirSync(thumbnailFolderPath)
-          resolve()
-        }
-      })
+        } else { */
+      fs.mkdirSync(thumbnailFolderPath)
+      resolve()
+      /* }
+		}) */
     } else {
       fs.mkdirSync(thumbnailFolderPath)
       resolve()

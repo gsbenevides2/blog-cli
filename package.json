@@ -45,6 +45,7 @@
     "follow-redirects": "^1.14.1",
     "notionapi-agent": "^1.2.1",
     "rimraf": "^3.0.2",
+    "rmrf": "^2.0.3",
     "sharp": "^0.28.1",
     "socket.io": "^4.1.2",
     "uuid": "^8.3.2",
