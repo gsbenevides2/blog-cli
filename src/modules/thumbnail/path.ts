@@ -19,11 +19,15 @@ export const metaTagThumbnailPath = path.resolve(
 export const listThumbnailPath = path.resolve(thumbnailFolderPath, 'list.webp')
 
 export function prepareThumbnailFolder(): Promise<void> {
-  return new Promise<void>(resolve => {
+  return new Promise<void>((resolve, reject) => {
     if (fs.existsSync(thumbnailFolderPath)) {
-      rmrf(thumbnailFolderPath, fs, () => {
-        fs.mkdirSync(thumbnailFolderPath)
-        resolve()
+      rmrf(thumbnailFolderPath, fs, error => {
+        if (error) {
+          reject(error)
+        } else {
+          fs.mkdirSync(thumbnailFolderPath)
+          resolve()
+        }
       })
     } else {
       fs.mkdirSync(thumbnailFolderPath)
