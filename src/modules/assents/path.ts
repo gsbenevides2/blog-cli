@@ -6,7 +6,7 @@ export const assentFolderPath = path.resolve(process.cwd(), 'assents')
 export function prepareAssentFolder(): Promise<void> {
   return new Promise<void>(resolve => {
     if (fs.existsSync(assentFolderPath)) {
-      fs.rmSync(assentFolderPath, { recursive: true })
+      fs.rmdirSync(assentFolderPath, { recursive: true })
       fs.mkdirSync(assentFolderPath)
       resolve()
     } else {
