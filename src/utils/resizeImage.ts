@@ -8,5 +8,12 @@ export async function resizeImage(
   output: string,
   size: Size
 ): Promise<void> {
-  await sharp(input).resize(size.width, size.height).toFile(output)
+  return new Promise((resolve, reject) => {
+    sharp(input)
+      .resize(size.width, size.height)
+      .toFile(output, err => {
+        if (err) reject(err)
+        else resolve()
+      })
+  })
 }

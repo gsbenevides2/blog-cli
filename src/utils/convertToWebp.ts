@@ -1,8 +1,15 @@
-import webp from 'webp-converter'
+import sharp from 'sharp'
 
 export async function convertToWebp(
   input: string,
   output: string
 ): Promise<void> {
-  await webp.cwebp(input, output, '-q 100')
+  return new Promise((resolve, reject) => {
+    sharp(input)
+      .webp()
+      .toFile(output, err => {
+        if (err) reject(err)
+        else resolve()
+      })
+  })
 }
