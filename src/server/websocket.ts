@@ -23,9 +23,6 @@ export type Message = {
 
 export type Messager = (message: Message) => void
 export type ConfirmFunction = () => void
-const kill = (message: Message) => {
-  if (message.type === 'success') process.exit()
-}
 
 export function setupWebSocket(server: Server): void {
   const io = new SocketIoServer(server, {
@@ -61,7 +58,6 @@ export function setupWebSocket(server: Server): void {
       } else {
         sendPost(data.notionPageUrl, message => {
           socket.emit('message', message)
-          kill(message)
         }).then(sendPostContinue => {
           continueFunction = sendPostContinue
         })
@@ -77,7 +73,6 @@ export function setupWebSocket(server: Server): void {
       } else {
         updatePost(data.notionPageUrl, message => {
           socket.emit('message', message)
-          kill(message)
         }).then(updatePostContinue => {
           continueFunction = updatePostContinue
         })
@@ -93,7 +88,6 @@ export function setupWebSocket(server: Server): void {
       } else {
         deletePost(data.postName, message => {
           socket.emit('message', message)
-          kill(message)
         })
       }
     })
