@@ -23,14 +23,6 @@ const wait = () => {
   })
 }
 
-const folderExists = async (path: string) => {
-  try {
-    await fs.opendir(path)
-    return true
-  } catch (err) {
-    return false
-  }
-}
 export function prepareThumbnailFolder(): Promise<void> {
   // eslint-disable-next-line no-async-promise-executor
   return new Promise<void>(async (resolve, reject) => {
