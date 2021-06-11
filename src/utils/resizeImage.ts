@@ -1,9 +1,11 @@
+import fs from 'fs'
 import sharp from 'sharp'
+
 interface Size {
   width: number
   height: number
 }
-export async function resizeImage(
+export function resizeImage(
   input: string,
   output: string,
   size: Size
@@ -11,9 +13,12 @@ export async function resizeImage(
   return new Promise((resolve, reject) => {
     sharp(input)
       .resize(size.width, size.height)
-      .toFile(output, err => {
+      .toBuffer((err, buf) => {
         if (err) reject(err)
-        else resolve()
+        else {
+          fs.writeFileSync(output, buf)
+          resolve()
+        }
       })
   })
 }

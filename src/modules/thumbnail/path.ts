@@ -1,7 +1,6 @@
 import fs from 'fs'
 import path from 'path'
 import rmrf from 'rmrf'
-
 export const thumbnailFolderPath = path.resolve(process.cwd(), 'thumbnail')
 
 export const originalPngThumbnailPath = path.resolve(
@@ -18,19 +17,35 @@ export const metaTagThumbnailPath = path.resolve(
 )
 export const listThumbnailPath = path.resolve(thumbnailFolderPath, 'list.webp')
 
+const wait = () => {
+  return new Promise(resolve => {
+    setTimeout(resolve, 10000)
+  })
+}
+
+const folderExists = async (path: string) => {
+  try {
+    await fs.opendir(path)
+    return true
+  } catch (err) {
+    return false
+  }
+}
 export function prepareThumbnailFolder(): Promise<void> {
-  return new Promise<void>((resolve, reject) => {
+  // eslint-disable-next-line no-async-promise-executor
+  return new Promise<void>(async (resolve, reject) => {
     if (fs.existsSync(thumbnailFolderPath)) {
-      rmrf(
-        thumbnailFolderPath /*, fs, error => {
+      fs.rmdirSync(
+        thumbnailFolderPath,
+        { recursive: true } /*, fs, error => {
         if (error */
       ) /* {
           reject(error)
-        } else { */
+				} else { */
       fs.mkdirSync(thumbnailFolderPath)
       resolve()
       /* }
-		}) */
+}) */
     } else {
       fs.mkdirSync(thumbnailFolderPath)
       resolve()

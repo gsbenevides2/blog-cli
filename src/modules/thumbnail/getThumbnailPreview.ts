@@ -7,6 +7,6 @@ export function getThumbnailPreview(): Omit<Thumbnail, 'alt'> {
     list: `${previewUrl}/thumbnail/list.webp`,
     metaTag: `${previewUrl}/thumbnail/metaTag.png`,
     originalPng: `${previewUrl}/thumbnail/original.png`,
-    originalWebp: `${previewUrl}/thumbnail/original.webp`
+    originalWebp: `${previewUrl}/thumbnail/original.webp?v=${Math.random()}`
   }
 }

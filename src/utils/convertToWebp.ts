@@ -1,15 +1,15 @@
+import fs from 'fs'
 import sharp from 'sharp'
-
-export async function convertToWebp(
-  input: string,
-  output: string
-): Promise<void> {
+export function convertToWebp(input: string, output: string): Promise<void> {
   return new Promise((resolve, reject) => {
     sharp(input)
       .webp()
-      .toFile(output, err => {
+      .toBuffer((err, buf) => {
         if (err) reject(err)
-        else resolve()
+        else {
+          fs.writeFileSync(output, buf)
+          resolve()
+        }
       })
   })
 }
