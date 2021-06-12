@@ -9,5 +9,5 @@ export async function resizeImage(
   size: Size
 ): Promise<void> {
   const lenna = await jimp.read(input)
-  lenna.resize(size.width, size.height).write(output)
+  await lenna.resize(size.width, size.height).writeAsync(output)
 }
