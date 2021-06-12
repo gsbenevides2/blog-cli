@@ -43,6 +43,7 @@
     "jimp": "^0.16.1",
     "notionapi-agent": "^1.2.1",
     "socket.io": "^4.1.2",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "webp-converter": "^2.3.3"
   }
 }
