@@ -1216,9 +1216,9 @@ content-type@~1.0.4:
   resolved "https://registry.yarnpkg.com/content-type/-/content-type-1.0.4.tgz#e138cc75e040c727b1966fe5e5f8c9aee256fe3b"
   integrity sha512-hIP3EEPs8tB9AT1L+NUqtwOAps4mk2Zob89MWXMHjHWg9milF/j4osnnQLXBCBFBk/tvIG/tUc9mOUJiPBhPXA==
 
-convertio@gsbenevides2/convertio#2fbce7f1d47fc7c07b82b8b5f517069ac9c6ca5f:
-  version "2.0.4"
-  resolved "https://codeload.github.com/gsbenevides2/convertio/tar.gz/2fbce7f1d47fc7c07b82b8b5f517069ac9c6ca5f"
+convertio@gsbenevides2/convertio#b87bb14:
+  version "1.0.5"
+  resolved "https://codeload.github.com/gsbenevides2/convertio/tar.gz/b87bb14b4dbff8f7725b85eac097b5b1175f005d"
   dependencies:
     "@types/request" "^2.48.4"
     request "^2.88.0"
