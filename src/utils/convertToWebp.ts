@@ -6,7 +6,7 @@ export async function convertToWebp(
   output: string
 ): Promise<void> {
   const fsInput = fs.readFileSync(input)
-  const api = new Convertio('')
+  const api = new Convertio(process.env.CONVERT_KEY as string)
   const conversion = await api.convertFromBuffer(fsInput, 'webp')
   while (true) {
     const status = await api.getStatus(conversion.id)
